@@ -1,82 +1,91 @@
 <template>
-    <template if:true={showStickyBanner}>
-        <div class="sticky-container" style={componentTokenStyle}>
-            <div class={bannerClass} style={bannerStyle} role="status">
-                <span class="slds-assistive-text">{currentBanner.Variant__c}</span>
-                <lightning-icon
-                    icon-name={iconName}
-                    size="large"
-                    variant="inverse"
-                    class="slds-m-right_small">
-                </lightning-icon>
-                <div class="slds-notify__content">
-                    <h2 class="slds-text-heading_small slds-text-color_inverse banner-title">
-                        {currentBanner.Banner_Title__c}
-                    </h2>
-                    <template if:true={currentBanner.Banner_Description__c}>
-                        <p class="banner-description">
-                            {currentBanner.Banner_Description__c}
-                            <template if:true={showLink}>
-                                <a href={currentBanner.Links_To__c} target="_blank" rel="noopener noreferrer" class="slds-text-link_inverse slds-m-left_x-small">
+    <div class="banner-fixed-overlay">
+        <template if:true={showStickyBanner}>
+            <div class="sticky-container" style={componentTokenStyle}>
+                <div class={bannerClass} style={bannerStyle} role="status">
+                    <span class="slds-assistive-text">{currentBanner.Variant__c}</span>
+                    <lightning-icon
+                        icon-name={iconName}
+                        size="large"
+                        variant="inverse"
+                        class="slds-m-right_small">
+                    </lightning-icon>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small slds-text-color_inverse banner-title">
+                            {currentBanner.Banner_Title__c}
+                        </h2>
+                        <template if:true={currentBanner.Banner_Description__c}>
+                            <p class="banner-description">
+                                {currentBanner.Banner_Description__c}
+                                <template if:true={showLink}>
+                                    <a href={currentBanner.Links_To__c} target="_blank" rel="noopener noreferrer" class="slds-text-link_inverse slds-m-left_x-small">
+                                        Learn More
+                                    </a>
+                                </template>
+                            </p>
+                        </template>
+                        <div class="banner-message" lwc:dom="manual"></div>
+                    </div>
+                    <div class="slds-notify__close">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse slds-button_icon-container"
+                                title="Dismiss"
+                                onclick={handleDismiss}>
+                            <lightning-icon
+                                icon-name="utility:close"
+                                size="small"
+                                variant="inverse"
+                                alternative-text="Close">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Dismiss</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:true={showTickerBanner}>
+            <div class="ticker-shell" role="status" style={componentTokenStyle}>
+                <div class="ticker-track" style={tickerTrackStyle}>
+                    <template for:each={tickerItems} for:item="item">
+                        <article key={item.key} class={item.variantClass}>
+                            <div class="ticker-item-stack">
+                                <span class="ticker-title">{item.Banner_Title__c}</span>
+                                <template if:true={item.hasMessage}>
+                                    <span class="ticker-message" lwc:dom="manual" data-msg={item.key}></span>
+                                </template>
+                            </div>
+                            <template if:true={item.hasDescription}>
+                                <span class="ticker-description">{item.Banner_Description__c}</span>
+                            </template>
+                            <template if:true={item.hasLink}>
+                                <a href={item.Links_To__c} target="_blank" rel="noopener noreferrer" class="ticker-link">
                                     Learn More
                                 </a>
                             </template>
-                        </p>
+                            <span class="ticker-separator" aria-hidden="true">•</span>
+                        </article>
                     </template>
-                    <template if:true={currentBannerHasMessage}>
-                        <div class="banner-message">
-                            <lightning-formatted-rich-text value={currentBanner.Banner_Message__c}></lightning-formatted-rich-text>
-                        </div>
+                    <template for:each={tickerItems} for:item="item">
+                        <article key={item.duplicateKey} class={item.variantClass}>
+                            <div class="ticker-item-stack">
+                                <span class="ticker-title">{item.Banner_Title__c}</span>
+                                <template if:true={item.hasMessage}>
+                                    <span class="ticker-message" lwc:dom="manual" data-msg={item.duplicateKey}></span>
+                                </template>
+                            </div>
+                            <template if:true={item.hasDescription}>
+                                <span class="ticker-description">{item.Banner_Description__c}</span>
+                            </template>
+                            <template if:true={item.hasLink}>
+                                <a href={item.Links_To__c} target="_blank" rel="noopener noreferrer" class="ticker-link">
+                                    Learn More
+                                </a>
+                            </template>
+                            <span class="ticker-separator" aria-hidden="true">•</span>
+                        </article>
                     </template>
                 </div>
-                <div class="slds-notify__close">
-                    <button class="slds-button slds-button_icon slds-button_icon-inverse slds-button_icon-container"
-                            title="Dismiss"
-                            onclick={handleDismiss}>
-                        <lightning-icon
-                            icon-name="utility:close"
-                            size="small"
-                            variant="inverse"
-                            alternative-text="Close">
-                        </lightning-icon>
-                        <span class="slds-assistive-text">Dismiss</span>
-                    </button>
-                </div>
             </div>
-        </div>
-    </template>
-    <template if:true={showTickerBanner}>
-        <div class="ticker-shell" role="status" style={componentTokenStyle}>
-            <div class="ticker-track" style={tickerTrackStyle}>
-                <template for:each={tickerItems} for:item="item">
-                    <article key={item.key} class={item.variantClass}>
-                        <span class="ticker-title">{item.Banner_Title__c}</span>
-                        <template if:true={item.hasDescription}>
-                            <span class="ticker-description">{item.Banner_Description__c}</span>
-                        </template>
-                        <template if:true={item.hasLink}>
-                            <a href={item.Links_To__c} target="_blank" rel="noopener noreferrer" class="ticker-link">
-                                Learn More
-                            </a>
-                        </template>
-                        <span class="ticker-separator" aria-hidden="true">•</span>
-                    </article>
-                </template>
-                <template for:each={tickerItems} for:item="item">
-                    <article key={item.duplicateKey} class={item.variantClass}>
-                        <span class="ticker-title">{item.Banner_Title__c}</span>
-                        <template if:true={item.hasDescription}>
-                            <span class="ticker-description">{item.Banner_Description__c}</span>
-                        </template>
-                        <template if:true={item.hasLink}>
-                            <a href={item.Links_To__c} target="_blank" rel="noopener noreferrer" class="ticker-link">
-                                Learn More
-                            </a>
-                        </template>
-                        <span class="ticker-separator" aria-hidden="true">•</span>
-                    </article>
-                </template>
-            </div>
-        </div>
-    </template>
+        </template>
+    </div>
+    <div class="banner-spacer"></div>
 </template>

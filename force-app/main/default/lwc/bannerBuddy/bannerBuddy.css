@@ -1,5 +1,6 @@
 :host {
     display: block;
+    width: 100%;
     --bannerbuddy-edge-overlay: #0f172a;
     --bannerbuddy-edge-fade-width: 4.5rem;
     --bannerbuddy-sticky-width: 100%;
@@ -22,12 +23,25 @@
     --bannerbuddy-success-text: #ffffff;
 }
 
+/* ── Fixed Overlay + Spacer ────────────────────── */
+
+.banner-fixed-overlay {
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10000;
+}
+
+.banner-spacer {
+    display: block;
+}
+
 /* ── Sticky Mode ─────────────────────────────── */
 
 .sticky-container {
-    position: relative;
     width: var(--bannerbuddy-sticky-width);
     max-width: var(--bannerbuddy-sticky-max-width);
+    margin: 0 auto;
 }
 
 .slds-notify {
@@ -80,6 +94,20 @@
     font-size: 0.875rem;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.92);
+}
+
+.banner-message:empty {
+    display: none;
+}
+
+.banner-message p {
+    margin: 0.25rem 0;
+}
+
+.banner-message ul,
+.banner-message ol {
+    margin: 0.25rem 0;
+    padding-left: 1.25rem;
 }
 
 .slds-notify__close {
@@ -190,8 +218,29 @@
     line-height: 1.2;
 }
 
+.ticker-item-stack {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
 .ticker-title {
     font-weight: 600;
+}
+
+.ticker-message {
+    font-size: 0.7rem;
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+.ticker-message p,
+.ticker-message ul,
+.ticker-message ol,
+.ticker-message li {
+    display: inline;
+    margin: 0;
+    padding: 0;
 }
 
 .ticker-description {

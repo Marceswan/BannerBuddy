@@ -55,9 +55,24 @@ export default class BannerBuddy extends LightningElement {
     dismissedBanners = new Set();
     autoDismissTimer = null;
     _mode = 'sticky';
+    _overlayPositioned = false;
+    _resizeObserver = null;
 
     // Experience Builder grouped config (takes precedence over individual props)
-    @api bannerConfig;
+    _bannerConfig;
+
+    @api
+    get bannerConfig() {
+        return this._bannerConfig;
+    }
+
+    set bannerConfig(val) {
+        if (typeof val === 'string') {
+            try { val = JSON.parse(val); } catch (e) { val = {}; }
+        }
+        this._bannerConfig = val && typeof val === 'object' ? val : {};
+        this.syncModeState();
+    }
 
     // Configurable color properties
     @api infoColor = '#6d5bf6';
@@ -91,8 +106,8 @@ export default class BannerBuddy extends LightningElement {
      * falls back to the individual @api property value.
      */
     resolveConfig(fieldName, individualValue) {
-        if (this.bannerConfig && typeof this.bannerConfig === 'object') {
-            const configValue = this.bannerConfig[fieldName];
+        if (this._bannerConfig && typeof this._bannerConfig === 'object') {
+            const configValue = this._bannerConfig[fieldName];
             if (configValue !== undefined && configValue !== null && configValue !== '') {
                 return configValue;
             }
@@ -223,6 +238,7 @@ export default class BannerBuddy extends LightningElement {
             duplicateKey: `${banner.Id}-duplicate-${index}`,
             variantClass: 'ticker-item',
             hasDescription: Boolean(banner.Banner_Description__c),
+            hasMessage: Boolean(banner.Banner_Message__c),
             hasLink: Boolean(banner.Links_To__c)
         }));
     }
@@ -438,7 +454,97 @@ export default class BannerBuddy extends LightningElement {
         }
     }
 
+    renderedCallback() {
+        this._injectRichTextContent();
+        this._syncOverlayAndSpacer();
+    }
+
+    _injectRichTextContent() {
+        // Sticky mode: single banner message element (always present via lwc:dom="manual")
+        if (this.isStickyMode) {
+            const el = this.template.querySelector('.banner-message');
+            if (el) {
+                const content = this.currentBanner.Banner_Message__c || '';
+                if (el.innerHTML !== content) {
+                    el.innerHTML = content;
+                }
+            }
+        }
+
+        // Ticker mode: multiple message elements keyed by data-msg
+        if (this.isTickerMode) {
+            const contentMap = new Map();
+            for (const item of this.tickerItems) {
+                if (item.hasMessage) {
+                    contentMap.set(item.key, item.Banner_Message__c);
+                    contentMap.set(item.duplicateKey, item.Banner_Message__c);
+                }
+            }
+            this.template.querySelectorAll('.ticker-message[data-msg]').forEach(el => {
+                const content = contentMap.get(el.dataset.msg);
+                if (content) {
+                    el.innerHTML = content;
+                }
+            });
+        }
+    }
+
+    _syncOverlayAndSpacer() {
+        const overlay = this.template.querySelector('.banner-fixed-overlay');
+        const spacer = this.template.querySelector('.banner-spacer');
+        if (!overlay || !spacer) {
+            return;
+        }
+
+        const hasContent = overlay.offsetHeight > 0;
+
+        // When all banners are dismissed, remove fixed positioning and collapse spacer
+        if (!hasContent) {
+            overlay.style.position = '';
+            overlay.style.top = '';
+            spacer.style.height = '0';
+            this._overlayPositioned = false;
+            return;
+        }
+
+        // First time content appears: measure position BEFORE fixing so we
+        // know how far down the nav bar pushes the content area.
+        if (!this._overlayPositioned) {
+            const hostRect = this.getBoundingClientRect();
+            const scrollY = window.pageYOffset || 0;
+            const navOffset = Math.max(0, hostRect.top + scrollY);
+
+            overlay.style.position = 'fixed';
+            overlay.style.top = `${navOffset}px`;
+            this._overlayPositioned = true;
+
+            // Watch for overlay height changes (viewport resize, content reflow)
+            if (!this._resizeObserver) {
+                // eslint-disable-next-line no-undef
+                this._resizeObserver = new ResizeObserver(() => {
+                    this._syncSpacerHeight();
+                });
+                this._resizeObserver.observe(overlay);
+            }
+        }
+
+        this._syncSpacerHeight();
+    }
+
+    _syncSpacerHeight() {
+        const overlay = this.template.querySelector('.banner-fixed-overlay');
+        const spacer = this.template.querySelector('.banner-spacer');
+        if (overlay && spacer) {
+            const h = overlay.offsetHeight;
+            spacer.style.height = h > 0 ? `${h}px` : '0';
+        }
+    }
+
     disconnectedCallback() {
         this.clearAutoDismissTimer();
+        if (this._resizeObserver) {
+            this._resizeObserver.disconnect();
+            this._resizeObserver = null;
+        }
     }
 }
