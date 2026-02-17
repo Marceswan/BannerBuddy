@@ -1,0 +1,129 @@
+:host {
+    display: block;
+}
+
+.preview-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.preview-card {
+    border: 1px solid #d8dde6;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    padding: 0.75rem;
+}
+
+.preview-card_active {
+    box-shadow: 0 0 0 2px #0176d3 inset;
+}
+
+.preview-title {
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #3e3e3c;
+    margin-bottom: 0.5rem;
+}
+
+.sticky-preview-wrap {
+    border-radius: 0.4rem;
+    background: #f3f5f7;
+    padding: 0.8rem;
+    display: flex;
+    justify-content: center;
+}
+
+.sticky-preview-container {
+    width: 100%;
+}
+
+.sticky-preview-banner {
+    padding: 0.65rem 0.85rem;
+}
+
+.sticky-preview-header {
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.sticky-preview-body {
+    font-size: 0.75rem;
+    line-height: 1.35;
+}
+
+.ticker-preview-shell {
+    position: relative;
+    overflow: hidden;
+}
+
+.ticker-preview-shell::before,
+.ticker-preview-shell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--preview-edge-fade-width, 3rem);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ticker-preview-shell::before {
+    left: 0;
+    background: linear-gradient(to right, var(--preview-edge-fade-color, #0f172a) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.ticker-preview-shell::after {
+    right: 0;
+    background: linear-gradient(to left, var(--preview-edge-fade-color, #0f172a) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.ticker-preview-track {
+    display: inline-flex;
+    align-items: center;
+    min-width: 100%;
+    white-space: nowrap;
+    width: max-content;
+    animation: previewTickerScroll var(--bannerbuddy-preview-duration, 30s) linear infinite;
+    padding-left: 0.6rem;
+}
+
+.ticker-preview-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-right: 0.75rem;
+    font-size: 0.72rem;
+    line-height: 1.15;
+    border-radius: 999px;
+    padding: 0.2rem 0.55rem;
+}
+
+.ticker-preview-variant {
+    font-weight: 700;
+}
+
+.ticker-preview-description {
+    opacity: 0.85;
+}
+
+.ticker-preview-separator {
+    opacity: 0.45;
+}
+
+@keyframes previewTickerScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ticker-preview-track {
+        animation: none;
+    }
+}

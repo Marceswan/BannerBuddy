@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Banner Buddy</masterLabel>
+    <description>Displays sticky or ticker-style banners for Lightning and Experience pages</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__RecordPage,lightning__AppPage">
+            <property name="mode" type="String" label="Display Mode" default="sticky" datasource="sticky,ticker" description="sticky shows one dismissible banner; ticker scrolls all active banners."/>
+            <property name="tokenPreset" type="String" label="Token Preset" default="default" datasource="default,compact,broadcast" description="Base design token preset. Individual token properties override preset values."/>
+            <property name="stickyTopOffset" type="String" label="Sticky Top Offset" default="10px" description="Top offset for sticky mode (e.g. 10px)."/>
+            <property name="stickyWidth" type="String" label="Sticky Width" default="90%" description="Width for sticky mode (e.g. 90%)."/>
+            <property name="stickyMaxWidth" type="String" label="Sticky Max Width" default="800px" description="Max width for sticky mode."/>
+            <property name="stickyBorderRadius" type="String" label="Sticky Radius" default="20px" description="Border radius for sticky mode."/>
+            <property name="stickyShadow" type="String" label="Sticky Shadow" default="0 4px 12px rgba(0, 0, 0, 0.15)" description="CSS box-shadow value for sticky mode."/>
+            <property name="tickerBackgroundColor" type="String" label="Ticker Background" default="#0f172a" description="Ticker bar background color."/>
+            <property name="tickerTextColor" type="String" label="Ticker Text Color" default="#f8fafc" description="Ticker text color."/>
+            <property name="tickerEdgeFadeColor" type="String" label="Ticker Edge Fade Color" default="#0f172a" description="Color used by left/right ticker fade overlays."/>
+            <property name="tickerEdgeFadeWidth" type="String" label="Ticker Edge Fade Width" default="4.5rem" description="Width of left/right ticker fade overlays."/>
+            <property name="tickerSpeedSeconds" type="Integer" label="Ticker Base Speed (s)" default="28" min="5" max="180" description="Lower values scroll faster. Final speed scales with number of active records."/>
+            <property name="infoColor" type="String" label="Info Banner Color" default="#6d5bf6" description="Hex color for Info variant banners"/>
+            <property name="errorColor" type="String" label="Error Banner Color" default="#c23934" description="Hex color for Error variant banners"/>
+            <property name="warningColor" type="String" label="Warning Banner Color" default="#ff9e2c" description="Hex color for Warning variant banners"/>
+            <property name="successColor" type="String" label="Success Banner Color" default="#08ca4a" description="Hex color for Success variant banners"/>
+            <supportedFormFactors>
+                <supportedFormFactor type="Large"/>
+                <supportedFormFactor type="Small"/>
+            </supportedFormFactors>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen" configurationEditor="c-banner-buddy-property-editor">
+            <property name="mode" type="String" label="Display Mode" default="sticky" description="sticky shows one dismissible banner; ticker scrolls all active banners."/>
+            <property name="tokenPreset" type="String" label="Token Preset" default="default" description="Base design token preset. Individual token properties override preset values."/>
+            <property name="stickyTopOffset" type="String" label="Sticky Top Offset" default="10px" description="Top offset for sticky mode (e.g. 10px)."/>
+            <property name="stickyWidth" type="String" label="Sticky Width" default="90%" description="Width for sticky mode (e.g. 90%)."/>
+            <property name="stickyMaxWidth" type="String" label="Sticky Max Width" default="800px" description="Max width for sticky mode."/>
+            <property name="stickyBorderRadius" type="String" label="Sticky Radius" default="20px" description="Border radius for sticky mode."/>
+            <property name="stickyShadow" type="String" label="Sticky Shadow" default="0 4px 12px rgba(0, 0, 0, 0.15)" description="CSS box-shadow value for sticky mode."/>
+            <property name="tickerBackgroundColor" type="String" label="Ticker Background" default="#0f172a" description="Ticker bar background color."/>
+            <property name="tickerTextColor" type="String" label="Ticker Text Color" default="#f8fafc" description="Ticker text color."/>
+            <property name="tickerEdgeFadeColor" type="String" label="Ticker Edge Fade Color" default="#0f172a" description="Color used by left/right ticker fade overlays."/>
+            <property name="tickerEdgeFadeWidth" type="String" label="Ticker Edge Fade Width" default="4.5rem" description="Width of left/right ticker fade overlays."/>
+            <property name="tickerSpeedSeconds" type="Integer" label="Ticker Base Speed (s)" default="28" description="Lower values scroll faster. Final speed scales with number of active records."/>
+            <property name="infoColor" type="String" label="Info Banner Color" default="#6d5bf6" description="Hex color for Info variant banners"/>
+            <property name="errorColor" type="String" label="Error Banner Color" default="#c23934" description="Hex color for Error variant banners"/>
+            <property name="warningColor" type="String" label="Warning Banner Color" default="#ff9e2c" description="Hex color for Warning variant banners"/>
+            <property name="successColor" type="String" label="Success Banner Color" default="#08ca4a" description="Hex color for Success variant banners"/>
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="mode" type="String" label="Display Mode" default="sticky" datasource="sticky,ticker" description="sticky shows one dismissible banner; ticker scrolls all active banners."/>
+            <property name="tokenPreset" type="String" label="Token Preset" default="default" datasource="default,compact,broadcast" description="Base design token preset. Individual token properties override preset values."/>
+            <property name="stickyTopOffset" type="String" label="Sticky Top Offset" default="10px" description="Top offset for sticky mode (e.g. 10px)."/>
+            <property name="stickyWidth" type="String" label="Sticky Width" default="90%" description="Width for sticky mode (e.g. 90%)."/>
+            <property name="stickyMaxWidth" type="String" label="Sticky Max Width" default="800px" description="Max width for sticky mode."/>
+            <property name="stickyBorderRadius" type="String" label="Sticky Radius" default="20px" description="Border radius for sticky mode."/>
+            <property name="stickyShadow" type="String" label="Sticky Shadow" default="0 4px 12px rgba(0, 0, 0, 0.15)" description="CSS box-shadow value for sticky mode."/>
+            <property name="tickerBackgroundColor" type="Color" label="Ticker Background" default="#0f172a" description="Ticker bar background color."/>
+            <property name="tickerTextColor" type="Color" label="Ticker Text Color" default="#f8fafc" description="Ticker text color."/>
+            <property name="tickerEdgeFadeColor" type="Color" label="Ticker Edge Fade Color" default="#0f172a" description="Color used by left/right ticker fade overlays."/>
+            <property name="tickerEdgeFadeWidth" type="String" label="Ticker Edge Fade Width" default="4.5rem" description="Width of left/right ticker fade overlays."/>
+            <property name="tickerItemBackgroundColor" type="Color" label="Ticker Item Background" default="#3a4354" description="Deprecated. Kept for backward compatibility with existing Experience Site pages."/>
+            <property name="tickerSpeedSeconds" type="Integer" label="Ticker Base Speed (s)" default="28" min="5" max="180" description="Lower values scroll faster. Final speed scales with number of active records."/>
+            <property name="infoColor" type="Color" label="Info Banner Color" default="#6d5bf6" description="Hex color for Info variant banners"/>
+            <property name="errorColor" type="Color" label="Error Banner Color" default="#c23934" description="Hex color for Error variant banners"/>
+            <property name="warningColor" type="Color" label="Warning Banner Color" default="#ff9e2c" description="Hex color for Warning variant banners"/>
+            <property name="successColor" type="Color" label="Success Banner Color" default="#08ca4a" description="Hex color for Success variant banners"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,133 @@
+<template>
+    <div class="slds-form slds-p-around_medium">
+        <h2 class="slds-text-heading_small slds-m-bottom_small">Banner Buddy Property Editor</h2>
+        <p class="slds-text-body_small slds-m-bottom_medium">
+            Configure mode and design tokens for the Banner Buddy Flow screen component.
+        </p>
+
+        <div class="slds-grid slds-wrap slds-gutters_small">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <lightning-combobox
+                    label="Display Mode"
+                    data-field="mode"
+                    value={values.mode}
+                    options={modeOptions}
+                    onchange={handleFieldChange}
+                ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <lightning-combobox
+                    label="Token Preset"
+                    data-field="tokenPreset"
+                    value={values.tokenPreset}
+                    options={presetOptions}
+                    onchange={handleFieldChange}
+                ></lightning-combobox>
+                <div class="slds-m-top_small">
+                    <lightning-button
+                        label="Reset Token Overrides"
+                        title="Reset token fields to follow selected preset"
+                        onclick={handleResetPresetOverrides}
+                    ></lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Sticky Tokens</h3>
+        <div class="slds-grid slds-wrap slds-gutters_small">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Top Offset" data-field="stickyTopOffset" value={values.stickyTopOffset} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Width" data-field="stickyWidth" value={values.stickyWidth} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Max Width" data-field="stickyMaxWidth" value={values.stickyMaxWidth} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Border Radius" data-field="stickyBorderRadius" value={values.stickyBorderRadius} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                <lightning-input label="Shadow" data-field="stickyShadow" value={values.stickyShadow} onchange={handleFieldChange}></lightning-input>
+            </div>
+        </div>
+
+        <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Ticker Tokens</h3>
+        <div class="slds-grid slds-wrap slds-gutters_small">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Background Color" data-field="tickerBackgroundColor" value={values.tickerBackgroundColor} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Text Color" data-field="tickerTextColor" value={values.tickerTextColor} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Edge Fade Color" data-field="tickerEdgeFadeColor" value={values.tickerEdgeFadeColor} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Edge Fade Width" data-field="tickerEdgeFadeWidth" value={values.tickerEdgeFadeWidth} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input label="Item Background" data-field="tickerItemBackgroundColor" value={values.tickerItemBackgroundColor} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <lightning-input
+                    type="number"
+                    min="5"
+                    max="180"
+                    step="1"
+                    label="Base Speed (s)"
+                    data-field="tickerSpeedSeconds"
+                    value={values.tickerSpeedSeconds}
+                    onchange={handleFieldChange}
+                ></lightning-input>
+            </div>
+        </div>
+
+        <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Variant Colors</h3>
+        <div class="slds-grid slds-wrap slds-gutters_small">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <lightning-input label="Info Color" data-field="infoColor" value={values.infoColor} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <lightning-input label="Error Color" data-field="errorColor" value={values.errorColor} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <lightning-input label="Warning Color" data-field="warningColor" value={values.warningColor} onchange={handleFieldChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <lightning-input label="Success Color" data-field="successColor" value={values.successColor} onchange={handleFieldChange}></lightning-input>
+            </div>
+        </div>
+
+        <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Live Preview</h3>
+        <div class="preview-grid">
+            <section class={stickyPreviewCardClass}>
+                <div class="preview-title">Sticky Preview</div>
+                <div class="sticky-preview-wrap">
+                    <div class="sticky-preview-container" style={stickyPreviewContainerStyle}>
+                        <article class="sticky-preview-banner" style={stickyPreviewBannerStyle}>
+                            <div class="sticky-preview-header">Info</div>
+                            <div class="sticky-preview-body">Platform updates available. Learn more about new capabilities.</div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class={tickerPreviewCardClass}>
+                <div class="preview-title">Ticker Preview</div>
+                <div class="ticker-preview-shell" style={tickerPreviewShellStyle}>
+                    <div class="ticker-preview-track" style={tickerPreviewTrackStyle}>
+                        <template for:each={tickerPreviewLoopItems} for:item="item">
+                            <article key={item.key} class="ticker-preview-item" style={item.style}>
+                                <span class="ticker-preview-variant">{item.variant}</span>
+                                <span>{item.title}</span>
+                                <span class="ticker-preview-description">{item.description}</span>
+                                <span class="ticker-preview-separator" aria-hidden="true">•</span>
+                            </article>
+                        </template>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</template>

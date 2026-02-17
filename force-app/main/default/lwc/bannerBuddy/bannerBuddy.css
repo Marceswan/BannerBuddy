@@ -1,0 +1,235 @@
+:host {
+    display: block;
+    --bannerbuddy-edge-overlay: #0f172a;
+    --bannerbuddy-edge-fade-width: 4.5rem;
+    --bannerbuddy-sticky-width: 100%;
+    --bannerbuddy-sticky-max-width: 100%;
+    --bannerbuddy-sticky-radius: 0px;
+    --bannerbuddy-sticky-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --bannerbuddy-ticker-bg: #0f172a;
+    --bannerbuddy-ticker-text: #f8fafc;
+    --bannerbuddy-ticker-item-gap: 1.25rem;
+    --bannerbuddy-ticker-padding-y: 0.65rem;
+    --bannerbuddy-ticker-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --bannerbuddy-ticker-duration: 28s;
+    --bannerbuddy-info-bg: #6d5bf6;
+    --bannerbuddy-info-text: #ffffff;
+    --bannerbuddy-error-bg: #c23934;
+    --bannerbuddy-error-text: #ffffff;
+    --bannerbuddy-warning-bg: #ff9e2c;
+    --bannerbuddy-warning-text: #080707;
+    --bannerbuddy-success-bg: #08ca4a;
+    --bannerbuddy-success-text: #ffffff;
+}
+
+/* ── Sticky Mode ─────────────────────────────── */
+
+.sticky-container {
+    position: relative;
+    width: var(--bannerbuddy-sticky-width);
+    max-width: var(--bannerbuddy-sticky-max-width);
+}
+
+.slds-notify {
+    position: relative;
+    padding: 1rem 2.5rem 1rem 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: var(--bannerbuddy-sticky-shadow);
+    border-radius: var(--bannerbuddy-sticky-radius) !important;
+    animation: fadeOut 15s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    66.67% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.slds-notify_alert {
+    display: flex;
+    align-items: flex-start;
+    border-radius: var(--bannerbuddy-sticky-radius) !important;
+}
+
+.slds-notify__content {
+    flex: 1;
+}
+
+.banner-title {
+    margin: 0;
+    line-height: 1.25;
+}
+
+.banner-description {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.banner-message {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.slds-notify__close {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+}
+
+.slds-text-link_inverse {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.slds-text-link_inverse:hover {
+    opacity: 0.8;
+}
+
+.slds-notify__close .slds-button_icon-inverse {
+    color: white !important;
+}
+
+.slds-alert_info {
+    background-color: var(--bannerbuddy-info-bg);
+    color: var(--bannerbuddy-info-text) !important;
+}
+
+.slds-alert_info * {
+    color: var(--bannerbuddy-info-text) !important;
+}
+
+.slds-alert_error {
+    background-color: var(--bannerbuddy-error-bg);
+    color: var(--bannerbuddy-error-text) !important;
+}
+
+.slds-alert_error * {
+    color: var(--bannerbuddy-error-text) !important;
+}
+
+.slds-alert_warning {
+    background-color: var(--bannerbuddy-warning-bg);
+    color: var(--bannerbuddy-warning-text) !important;
+}
+
+.slds-alert_warning * {
+    color: var(--bannerbuddy-warning-text) !important;
+}
+
+.slds-theme_success {
+    background-color: var(--bannerbuddy-success-bg);
+    color: var(--bannerbuddy-success-text) !important;
+}
+
+.slds-theme_success * {
+    color: var(--bannerbuddy-success-text) !important;
+}
+
+/* ── Ticker Mode ─────────────────────────────── */
+
+.ticker-shell {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--bannerbuddy-ticker-bg);
+    color: var(--bannerbuddy-ticker-text);
+    box-shadow: var(--bannerbuddy-ticker-shadow);
+}
+
+.ticker-shell::before,
+.ticker-shell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--bannerbuddy-edge-fade-width);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ticker-shell::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bannerbuddy-edge-overlay) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.ticker-shell::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bannerbuddy-edge-overlay) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.ticker-track {
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    min-width: 100%;
+    white-space: nowrap;
+    padding: var(--bannerbuddy-ticker-padding-y) 0;
+    animation: tickerScroll var(--bannerbuddy-ticker-duration) linear infinite;
+    will-change: transform;
+}
+
+.ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: var(--bannerbuddy-ticker-item-gap);
+    font-size: 0.8rem;
+    line-height: 1.2;
+}
+
+.ticker-title {
+    font-weight: 600;
+}
+
+.ticker-description {
+    opacity: 0.75;
+}
+
+.ticker-link {
+    color: inherit;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.ticker-link:hover {
+    opacity: 0.85;
+}
+
+.ticker-separator {
+    opacity: 0.4;
+    margin-left: 0.25rem;
+}
+
+@keyframes tickerScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    :host {
+        --bannerbuddy-edge-fade-width: 2.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+        animation: none;
+    }
+}
