@@ -140,6 +140,14 @@ export default class BannerBuddyPropertyEditor extends LightningElement {
         return errors;
     }
 
+    get isStickyMode() {
+        return this.values.mode === 'sticky';
+    }
+
+    get isTickerMode() {
+        return this.values.mode === 'ticker';
+    }
+
     get stickyPreviewCardClass() {
         return this.values.mode === 'sticky' ? 'preview-card preview-card_active' : 'preview-card';
     }

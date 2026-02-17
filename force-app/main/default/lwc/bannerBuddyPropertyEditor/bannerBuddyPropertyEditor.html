@@ -33,55 +33,56 @@
             </div>
         </div>
 
-        <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Sticky Tokens</h3>
-        <div class="slds-grid slds-wrap slds-gutters_small">
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Top Offset" data-field="stickyTopOffset" value={values.stickyTopOffset} onchange={handleFieldChange}></lightning-input>
+        <template if:true={isStickyMode}>
+            <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Sticky Tokens</h3>
+            <div class="slds-grid slds-wrap slds-gutters_small">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Top Offset" data-field="stickyTopOffset" value={values.stickyTopOffset} onchange={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Width" data-field="stickyWidth" value={values.stickyWidth} onchange={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Max Width" data-field="stickyMaxWidth" value={values.stickyMaxWidth} onchange={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Border Radius" data-field="stickyBorderRadius" value={values.stickyBorderRadius} onchange={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                    <lightning-input label="Shadow" data-field="stickyShadow" value={values.stickyShadow} onchange={handleFieldChange}></lightning-input>
+                </div>
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Width" data-field="stickyWidth" value={values.stickyWidth} onchange={handleFieldChange}></lightning-input>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Max Width" data-field="stickyMaxWidth" value={values.stickyMaxWidth} onchange={handleFieldChange}></lightning-input>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Border Radius" data-field="stickyBorderRadius" value={values.stickyBorderRadius} onchange={handleFieldChange}></lightning-input>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
-                <lightning-input label="Shadow" data-field="stickyShadow" value={values.stickyShadow} onchange={handleFieldChange}></lightning-input>
-            </div>
-        </div>
+        </template>
 
-        <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Ticker Tokens</h3>
-        <div class="slds-grid slds-wrap slds-gutters_small">
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Background Color" data-field="tickerBackgroundColor" value={values.tickerBackgroundColor} onchange={handleFieldChange}></lightning-input>
+        <template if:true={isTickerMode}>
+            <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Ticker Tokens</h3>
+            <div class="slds-grid slds-wrap slds-gutters_small">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Background Color" data-field="tickerBackgroundColor" value={values.tickerBackgroundColor} onchange={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Text Color" data-field="tickerTextColor" value={values.tickerTextColor} onchange={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Edge Fade Color" data-field="tickerEdgeFadeColor" value={values.tickerEdgeFadeColor} onchange={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Edge Fade Width" data-field="tickerEdgeFadeWidth" value={values.tickerEdgeFadeWidth} onchange={handleFieldChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input
+                        type="number"
+                        min="5"
+                        max="180"
+                        step="1"
+                        label="Base Speed (s)"
+                        data-field="tickerSpeedSeconds"
+                        value={values.tickerSpeedSeconds}
+                        onchange={handleFieldChange}
+                    ></lightning-input>
+                </div>
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Text Color" data-field="tickerTextColor" value={values.tickerTextColor} onchange={handleFieldChange}></lightning-input>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Edge Fade Color" data-field="tickerEdgeFadeColor" value={values.tickerEdgeFadeColor} onchange={handleFieldChange}></lightning-input>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Edge Fade Width" data-field="tickerEdgeFadeWidth" value={values.tickerEdgeFadeWidth} onchange={handleFieldChange}></lightning-input>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input label="Item Background" data-field="tickerItemBackgroundColor" value={values.tickerItemBackgroundColor} onchange={handleFieldChange}></lightning-input>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
-                <lightning-input
-                    type="number"
-                    min="5"
-                    max="180"
-                    step="1"
-                    label="Base Speed (s)"
-                    data-field="tickerSpeedSeconds"
-                    value={values.tickerSpeedSeconds}
-                    onchange={handleFieldChange}
-                ></lightning-input>
-            </div>
-        </div>
+        </template>
 
         <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Variant Colors</h3>
         <div class="slds-grid slds-wrap slds-gutters_small">
@@ -100,8 +101,8 @@
         </div>
 
         <h3 class="slds-text-title_caps slds-m-top_large slds-m-bottom_small">Live Preview</h3>
-        <div class="preview-grid">
-            <section class={stickyPreviewCardClass}>
+        <template if:true={isStickyMode}>
+            <section class="preview-card preview-card_active">
                 <div class="preview-title">Sticky Preview</div>
                 <div class="sticky-preview-wrap">
                     <div class="sticky-preview-container" style={stickyPreviewContainerStyle}>
@@ -112,8 +113,9 @@
                     </div>
                 </div>
             </section>
-
-            <section class={tickerPreviewCardClass}>
+        </template>
+        <template if:true={isTickerMode}>
+            <section class="preview-card preview-card_active">
                 <div class="preview-title">Ticker Preview</div>
                 <div class="ticker-preview-shell" style={tickerPreviewShellStyle}>
                     <div class="ticker-preview-track" style={tickerPreviewTrackStyle}>
@@ -128,6 +130,6 @@
                     </div>
                 </div>
             </section>
-        </div>
+        </template>
     </div>
 </template>
