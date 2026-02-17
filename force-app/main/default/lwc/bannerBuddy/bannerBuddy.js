@@ -56,6 +56,9 @@ export default class BannerBuddy extends LightningElement {
     autoDismissTimer = null;
     _mode = 'sticky';
 
+    // Experience Builder grouped config (takes precedence over individual props)
+    @api bannerConfig;
+
     // Configurable color properties
     @api infoColor = '#6d5bf6';
     @api errorColor = '#c23934';
@@ -84,8 +87,23 @@ export default class BannerBuddy extends LightningElement {
         this.syncModeState();
     }
 
+    /**
+     * Resolves a config value from bannerConfig (Experience Builder CPE) or
+     * falls back to the individual @api property value.
+     */
+    resolveConfig(fieldName, individualValue) {
+        if (this.bannerConfig && typeof this.bannerConfig === 'object') {
+            const configValue = this.bannerConfig[fieldName];
+            if (configValue !== undefined && configValue !== null && configValue !== '') {
+                return configValue;
+            }
+        }
+        return individualValue;
+    }
+
     get normalizedMode() {
-        return String(this._mode || 'sticky').toLowerCase() === 'ticker' ? 'ticker' : 'sticky';
+        const resolved = this.resolveConfig('mode', this._mode);
+        return String(resolved || 'sticky').toLowerCase() === 'ticker' ? 'ticker' : 'sticky';
     }
 
     get isTickerMode() {
@@ -127,19 +145,19 @@ export default class BannerBuddy extends LightningElement {
     get resolvedTokens() {
         const preset = TOKEN_PRESETS[this.normalizedTokenPreset];
         return {
-            stickyTopOffset: this.normalizeLength(this.stickyTopOffset, preset.stickyTopOffset),
-            stickyWidth: this.normalizeLength(this.stickyWidth, preset.stickyWidth),
-            stickyMaxWidth: this.normalizeLength(this.stickyMaxWidth, preset.stickyMaxWidth),
-            stickyBorderRadius: this.normalizeLength(this.stickyBorderRadius, preset.stickyBorderRadius),
-            stickyShadow: this.normalizeString(this.stickyShadow, preset.stickyShadow),
-            tickerBackgroundColor: this.normalizeString(this.tickerBackgroundColor, preset.tickerBackgroundColor),
-            tickerTextColor: this.normalizeString(this.tickerTextColor, preset.tickerTextColor),
-            tickerEdgeFadeColor: this.normalizeString(this.tickerEdgeFadeColor, preset.tickerEdgeFadeColor),
-            tickerEdgeFadeWidth: this.normalizeLength(this.tickerEdgeFadeWidth, preset.tickerEdgeFadeWidth),
+            stickyTopOffset: this.normalizeLength(this.resolveConfig('stickyTopOffset', this.stickyTopOffset), preset.stickyTopOffset),
+            stickyWidth: this.normalizeLength(this.resolveConfig('stickyWidth', this.stickyWidth), preset.stickyWidth),
+            stickyMaxWidth: this.normalizeLength(this.resolveConfig('stickyMaxWidth', this.stickyMaxWidth), preset.stickyMaxWidth),
+            stickyBorderRadius: this.normalizeLength(this.resolveConfig('stickyBorderRadius', this.stickyBorderRadius), preset.stickyBorderRadius),
+            stickyShadow: this.normalizeString(this.resolveConfig('stickyShadow', this.stickyShadow), preset.stickyShadow),
+            tickerBackgroundColor: this.normalizeString(this.resolveConfig('tickerBackgroundColor', this.tickerBackgroundColor), preset.tickerBackgroundColor),
+            tickerTextColor: this.normalizeString(this.resolveConfig('tickerTextColor', this.tickerTextColor), preset.tickerTextColor),
+            tickerEdgeFadeColor: this.normalizeString(this.resolveConfig('tickerEdgeFadeColor', this.tickerEdgeFadeColor), preset.tickerEdgeFadeColor),
+            tickerEdgeFadeWidth: this.normalizeLength(this.resolveConfig('tickerEdgeFadeWidth', this.tickerEdgeFadeWidth), preset.tickerEdgeFadeWidth),
             tickerItemGap: preset.tickerItemGap,
             tickerPaddingY: preset.tickerPaddingY,
             tickerShadow: preset.tickerShadow,
-            tickerSpeedSeconds: this.normalizePositiveNumber(this.tickerSpeedSeconds, preset.tickerSpeedSeconds)
+            tickerSpeedSeconds: this.normalizePositiveNumber(this.resolveConfig('tickerSpeedSeconds', this.tickerSpeedSeconds), preset.tickerSpeedSeconds)
         };
     }
 
@@ -157,28 +175,45 @@ export default class BannerBuddy extends LightningElement {
             `--bannerbuddy-ticker-item-gap: ${tokens.tickerItemGap}`,
             `--bannerbuddy-ticker-padding-y: ${tokens.tickerPaddingY}`,
             `--bannerbuddy-ticker-shadow: ${tokens.tickerShadow}`,
-            `--bannerbuddy-info-bg: ${this.infoColor}`,
-            `--bannerbuddy-info-text: ${this.getReadableTextColor(this.infoColor)}`,
-            `--bannerbuddy-error-bg: ${this.errorColor}`,
-            `--bannerbuddy-error-text: ${this.getReadableTextColor(this.errorColor)}`,
-            `--bannerbuddy-warning-bg: ${this.warningColor}`,
-            `--bannerbuddy-warning-text: ${this.getReadableTextColor(this.warningColor)}`,
-            `--bannerbuddy-success-bg: ${this.successColor}`,
-            `--bannerbuddy-success-text: ${this.getReadableTextColor(this.successColor)}`
+            `--bannerbuddy-info-bg: ${this.resolvedInfoColor}`,
+            `--bannerbuddy-info-text: ${this.getReadableTextColor(this.resolvedInfoColor)}`,
+            `--bannerbuddy-error-bg: ${this.resolvedErrorColor}`,
+            `--bannerbuddy-error-text: ${this.getReadableTextColor(this.resolvedErrorColor)}`,
+            `--bannerbuddy-warning-bg: ${this.resolvedWarningColor}`,
+            `--bannerbuddy-warning-text: ${this.getReadableTextColor(this.resolvedWarningColor)}`,
+            `--bannerbuddy-success-bg: ${this.resolvedSuccessColor}`,
+            `--bannerbuddy-success-text: ${this.getReadableTextColor(this.resolvedSuccessColor)}`
         ].join('; ');
     }
 
     get normalizedTokenPreset() {
-        const preset = String(this.tokenPreset || DEFAULT_PRESET).toLowerCase();
+        const resolved = this.resolveConfig('tokenPreset', this.tokenPreset);
+        const preset = String(resolved || DEFAULT_PRESET).toLowerCase();
         return TOKEN_PRESETS[preset] ? preset : DEFAULT_PRESET;
+    }
+
+    get resolvedInfoColor() {
+        return this.resolveConfig('infoColor', this.infoColor) || '#6d5bf6';
+    }
+
+    get resolvedErrorColor() {
+        return this.resolveConfig('errorColor', this.errorColor) || '#c23934';
+    }
+
+    get resolvedWarningColor() {
+        return this.resolveConfig('warningColor', this.warningColor) || '#ff9e2c';
+    }
+
+    get resolvedSuccessColor() {
+        return this.resolveConfig('successColor', this.successColor) || '#08ca4a';
     }
 
     get variantColors() {
         return {
-            Info: this.infoColor || '#6d5bf6',
-            Error: this.errorColor || '#c23934',
-            Warning: this.warningColor || '#ff9e2c',
-            Success: this.successColor || '#08ca4a'
+            Info: this.resolvedInfoColor,
+            Error: this.resolvedErrorColor,
+            Warning: this.resolvedWarningColor,
+            Success: this.resolvedSuccessColor
         };
     }
 

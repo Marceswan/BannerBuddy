@@ -1,0 +1,133 @@
+<template>
+    <div class="editor-container">
+        <template if:true={hasErrors}>
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+                <template for:each={errorMessages} for:item="err">
+                    <p key={err.key}>{err.message}</p>
+                </template>
+            </div>
+        </template>
+
+        <div class="editor-section">
+            <lightning-combobox
+                label="Display Mode"
+                value={currentMode}
+                options={modeOptions}
+                onchange={handleModeChange}
+            ></lightning-combobox>
+        </div>
+
+        <div class="editor-section">
+            <lightning-combobox
+                label="Token Preset"
+                value={currentPreset}
+                options={presetOptions}
+                onchange={handlePresetChange}
+            ></lightning-combobox>
+        </div>
+
+        <template if:true={isStickyMode}>
+            <div class="editor-section">
+                <p class="section-title">Sticky Tokens</p>
+                <lightning-input
+                    label="Top Offset"
+                    data-field="stickyTopOffset"
+                    value={stickyTopOffset}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+                <lightning-input
+                    label="Width"
+                    data-field="stickyWidth"
+                    value={stickyWidth}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+                <lightning-input
+                    label="Max Width"
+                    data-field="stickyMaxWidth"
+                    value={stickyMaxWidth}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+                <lightning-input
+                    label="Border Radius"
+                    data-field="stickyBorderRadius"
+                    value={stickyBorderRadius}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+                <lightning-input
+                    label="Shadow"
+                    data-field="stickyShadow"
+                    value={stickyShadow}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+            </div>
+        </template>
+
+        <template if:true={isTickerMode}>
+            <div class="editor-section">
+                <p class="section-title">Ticker Tokens</p>
+                <lightning-input
+                    label="Background Color"
+                    data-field="tickerBackgroundColor"
+                    value={tickerBackgroundColor}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+                <lightning-input
+                    label="Text Color"
+                    data-field="tickerTextColor"
+                    value={tickerTextColor}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+                <lightning-input
+                    label="Edge Fade Color"
+                    data-field="tickerEdgeFadeColor"
+                    value={tickerEdgeFadeColor}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+                <lightning-input
+                    label="Edge Fade Width"
+                    data-field="tickerEdgeFadeWidth"
+                    value={tickerEdgeFadeWidth}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+                <lightning-input
+                    type="number"
+                    min="5"
+                    max="180"
+                    step="1"
+                    label="Base Speed (s)"
+                    data-field="tickerSpeedSeconds"
+                    value={tickerSpeedSeconds}
+                    onblur={handleFieldBlur}
+                ></lightning-input>
+            </div>
+        </template>
+
+        <div class="editor-section">
+            <p class="section-title">Variant Colors</p>
+            <lightning-input
+                label="Info Color"
+                data-field="infoColor"
+                value={infoColor}
+                onblur={handleFieldBlur}
+            ></lightning-input>
+            <lightning-input
+                label="Error Color"
+                data-field="errorColor"
+                value={errorColor}
+                onblur={handleFieldBlur}
+            ></lightning-input>
+            <lightning-input
+                label="Warning Color"
+                data-field="warningColor"
+                value={warningColor}
+                onblur={handleFieldBlur}
+            ></lightning-input>
+            <lightning-input
+                label="Success Color"
+                data-field="successColor"
+                value={successColor}
+                onblur={handleFieldBlur}
+            ></lightning-input>
+        </div>
+    </div>
+</template>

@@ -54,6 +54,7 @@
             <property name="successColor" type="String" label="Success Banner Color" default="#08ca4a" description="Hex color for Success variant banners"/>
         </targetConfig>
         <targetConfig targets="lightningCommunity__Default">
+            <property name="bannerConfig" type="c__bannerBuddyConfig" label="Banner Buddy Configuration" description="Grouped configuration with conditional property visibility. Values here override individual properties below."/>
             <property name="mode" type="String" label="Display Mode" default="sticky" datasource="sticky,ticker" description="sticky shows one dismissible banner; ticker scrolls all active banners."/>
             <property name="tokenPreset" type="String" label="Token Preset" default="default" datasource="default,compact,broadcast" description="Base design token preset. Individual token properties override preset values."/>
             <property name="stickyTopOffset" type="String" label="Sticky Top Offset" default="10px" description="Top offset for sticky mode (e.g. 10px)."/>

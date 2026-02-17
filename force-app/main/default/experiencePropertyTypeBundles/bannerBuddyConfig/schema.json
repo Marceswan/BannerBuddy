@@ -1,0 +1,91 @@
+{
+    "title": "Banner Buddy Configuration",
+    "lightning:type": "lightning__objectType",
+    "properties": {
+        "mode": {
+            "lightning:type": "lightning__textType",
+            "title": "Display Mode",
+            "description": "sticky shows one dismissible banner; ticker scrolls all active banners.",
+            "enum": ["sticky", "ticker"]
+        },
+        "tokenPreset": {
+            "lightning:type": "lightning__textType",
+            "title": "Token Preset",
+            "description": "Base design token preset. Individual token properties override preset values.",
+            "enum": ["default", "compact", "broadcast"]
+        },
+        "stickyTopOffset": {
+            "lightning:type": "lightning__textType",
+            "title": "Sticky Top Offset",
+            "description": "Top offset for sticky mode (e.g. 10px)."
+        },
+        "stickyWidth": {
+            "lightning:type": "lightning__textType",
+            "title": "Sticky Width",
+            "description": "Width for sticky mode (e.g. 90%)."
+        },
+        "stickyMaxWidth": {
+            "lightning:type": "lightning__textType",
+            "title": "Sticky Max Width",
+            "description": "Max width for sticky mode."
+        },
+        "stickyBorderRadius": {
+            "lightning:type": "lightning__textType",
+            "title": "Sticky Radius",
+            "description": "Border radius for sticky mode."
+        },
+        "stickyShadow": {
+            "lightning:type": "lightning__textType",
+            "title": "Sticky Shadow",
+            "description": "CSS box-shadow value for sticky mode."
+        },
+        "tickerBackgroundColor": {
+            "lightning:type": "lightning__textType",
+            "title": "Ticker Background",
+            "description": "Ticker bar background color."
+        },
+        "tickerTextColor": {
+            "lightning:type": "lightning__textType",
+            "title": "Ticker Text Color",
+            "description": "Ticker text color."
+        },
+        "tickerEdgeFadeColor": {
+            "lightning:type": "lightning__textType",
+            "title": "Ticker Edge Fade Color",
+            "description": "Color used by left/right ticker fade overlays."
+        },
+        "tickerEdgeFadeWidth": {
+            "lightning:type": "lightning__textType",
+            "title": "Ticker Edge Fade Width",
+            "description": "Width of left/right ticker fade overlays."
+        },
+        "tickerSpeedSeconds": {
+            "lightning:type": "lightning__integerType",
+            "title": "Ticker Base Speed (s)",
+            "description": "Lower values scroll faster. Final speed scales with number of active records.",
+            "minimum": 5,
+            "maximum": 180
+        },
+        "infoColor": {
+            "lightning:type": "lightning__textType",
+            "title": "Info Banner Color",
+            "description": "Hex color for Info variant banners."
+        },
+        "errorColor": {
+            "lightning:type": "lightning__textType",
+            "title": "Error Banner Color",
+            "description": "Hex color for Error variant banners."
+        },
+        "warningColor": {
+            "lightning:type": "lightning__textType",
+            "title": "Warning Banner Color",
+            "description": "Hex color for Warning variant banners."
+        },
+        "successColor": {
+            "lightning:type": "lightning__textType",
+            "title": "Success Banner Color",
+            "description": "Hex color for Success variant banners."
+        }
+    },
+    "required": ["mode"]
+}

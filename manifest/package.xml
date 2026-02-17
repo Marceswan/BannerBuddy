@@ -33,12 +33,20 @@
         <name>StaticResource</name>
     </types>
     <types>
+        <members>bannerBuddyConfig</members>
+        <name>ExperiencePropertyTypeBundle</name>
+    </types>
+    <types>
         <members>Banner_Buddy__c</members>
         <name>CustomObject</name>
     </types>
     <types>
         <members>Banner_Buddy__c</members>
         <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Banner_Buddy_Record_Page</members>
+        <name>FlexiPage</name>
     </types>
     <version>64.0</version>
 </Package>
