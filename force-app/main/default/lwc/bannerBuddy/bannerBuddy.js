@@ -74,7 +74,6 @@ export default class BannerBuddy extends LightningElement {
     @api tickerTextColor;
     @api tickerEdgeFadeColor;
     @api tickerEdgeFadeWidth;
-    @api tickerItemBackgroundColor;
     @api tickerSpeedSeconds;
 
     @api
